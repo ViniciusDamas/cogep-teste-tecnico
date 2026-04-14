@@ -41,9 +41,13 @@ function legacyMobileBR(e164: string): string | null {
   return `+55${m[1]}${m[2]}`;
 }
 
-// Twilio WhatsApp sandbox error code for "recipient not in 24h conversation window
-// or not an opted-in participant" — used as the signal to retry with legacy format.
+// Twilio WhatsApp sandbox error codes:
+//   63015 — "recipient not in 24h conversation window or not opted-in"
+//           (Twilio rejeita no POST/sync — é o sinal pra retry no formato legado)
+//   63016 — "freeform message outside the allowed window"
+//           (Twilio aceita o POST, mas WhatsApp rejeita na entrega)
 const TWILIO_NOT_REACHABLE = 63015;
+const TWILIO_OUTSIDE_WINDOW = 63016;
 
 class MockProvider implements Provider {
   name = 'mock';
@@ -99,25 +103,42 @@ class TwilioProvider implements Provider {
       return { ok: false, error: 'unknown' };
     }
 
-    // Poll for terminal status — failures like 63015 arrive async.
-    const terminal = new Set(['delivered', 'read', 'sent', 'failed', 'undelivered']);
-    for (let i = 0; i < 4; i++) {
+    // Poll por estado terminal. WhatsApp tem dois estágios:
+    //   "sent" = aceita pela carrier (intermediário)
+    //   "delivered"/"read" = confirmado no app do usuário
+    //   "undelivered"/"failed" = falha terminal
+    // 'sent' NÃO é success definitivo — pode virar 'undelivered' com 63016
+    // (janela de 24h expirada). Por isso seguimos pollando mesmo após sent.
+    const terminalFailed = new Set(['failed', 'undelivered']);
+    const terminalSuccess = new Set(['delivered', 'read']);
+    let lastStatus = '';
+
+    for (let i = 0; i < 8; i++) {
       await new Promise((r) => setTimeout(r, 1000));
       try {
         const { data } = await axios.get(`${this.baseUrl()}/${sid}.json`, this.authConfig());
-        if (terminal.has(data.status)) {
-          const ok = ['sent', 'delivered', 'read'].includes(data.status);
-          const code = data.error_code ? Number(data.error_code) : undefined;
-          console.log(
-            `[notification:twilio] terminal sid=${sid} status=${data.status}${code ? ' code=' + code : ''}`,
+        lastStatus = data.status;
+        const code = data.error_code ? Number(data.error_code) : undefined;
+
+        if (terminalFailed.has(data.status)) {
+          const hint =
+            code === TWILIO_OUTSIDE_WINDOW
+              ? ' (janela de 24h do sandbox expirada — peça pro destinatário enviar qualquer msg para o sandbox)'
+              : '';
+          console.warn(
+            `[notification:twilio] terminal sid=${sid} status=${data.status} code=${code}${hint}`,
           );
           return {
-            ok,
+            ok: false,
             id: sid,
-            error: data.error_message ?? undefined,
+            error: data.error_message ?? `status=${data.status}`,
             errorCode: code,
             usedFormat: to,
           };
+        }
+        if (terminalSuccess.has(data.status)) {
+          console.log(`[notification:twilio] delivered sid=${sid} status=${data.status}`);
+          return { ok: true, id: sid, usedFormat: to };
         }
       } catch (err) {
         const msg = axios.isAxiosError(err) ? err.message : 'unknown';
@@ -125,8 +146,11 @@ class TwilioProvider implements Provider {
       }
     }
 
-    // Still pending after ~4s — treat as success (in-flight).
-    console.log(`[notification:twilio] still pending sid=${sid} — treating as success`);
+    // Após timeout: 'sent' significa aceito mas sem confirmação de entrega.
+    // Reportamos como sucesso parcial (não é falha confirmada).
+    console.log(
+      `[notification:twilio] timeout sid=${sid} lastStatus=${lastStatus} — sem confirmação de entrega`,
+    );
     return { ok: true, id: sid, usedFormat: to };
   }
 

@@ -45,15 +45,43 @@ import { ReurbStage } from '../../core/models';
 
           <nz-empty *ngIf="error" [nzNotFoundContent]="error"></nz-empty>
 
-          <div *ngIf="result">
-            <h3>{{ result.name }}</h3>
-            <p>
-              <code>{{ result.protocol }}</code>
-            </p>
-            <p class="text-muted">
-              Início: {{ result.startDate | date: 'dd/MM/yyyy' }} — Previsão de término:
-              {{ result.endDate | date: 'dd/MM/yyyy' }}
-            </p>
+          <div *ngIf="result" class="result-block">
+            <div class="result-head">
+              <div>
+                <code class="result-protocol">{{ result.protocol }}</code>
+                <h2 class="result-name">{{ result.name }}</h2>
+              </div>
+              <div class="result-progress">
+                <div class="result-progress__value">
+                  {{ progressPercent }}<span>%</span>
+                </div>
+                <div class="result-progress__label">concluído</div>
+              </div>
+            </div>
+
+            <div class="result-meta">
+              <div class="result-meta__item">
+                <span nz-icon nzType="calendar"></span>
+                <div>
+                  <div class="result-meta__label">Início</div>
+                  <div class="result-meta__value">{{ result.startDate | date: 'dd/MM/yyyy' }}</div>
+                </div>
+              </div>
+              <div class="result-meta__item">
+                <span nz-icon nzType="clock-circle"></span>
+                <div>
+                  <div class="result-meta__label">Previsão de término</div>
+                  <div class="result-meta__value">{{ result.endDate | date: 'dd/MM/yyyy' }}</div>
+                </div>
+              </div>
+              <div class="result-meta__item">
+                <span nz-icon nzType="appstore"></span>
+                <div>
+                  <div class="result-meta__label">Etapa atual</div>
+                  <div class="result-meta__value">{{ result.stage.order }} de {{ stages.length }}</div>
+                </div>
+              </div>
+            </div>
 
             <nz-divider nzText="Andamento do processo"></nz-divider>
 
@@ -77,6 +105,87 @@ import { ReurbStage } from '../../core/models';
         width: 100%;
         max-width: 720px;
       }
+      .result-head {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 20px;
+        margin-bottom: 20px;
+      }
+      .result-protocol {
+        font-size: 12px;
+      }
+      .result-name {
+        font-size: 22px;
+        font-weight: 800;
+        letter-spacing: -0.015em;
+        margin: 8px 0 0;
+        color: var(--c-ink);
+      }
+      .result-progress {
+        text-align: right;
+        flex-shrink: 0;
+      }
+      .result-progress__value {
+        font-size: 30px;
+        font-weight: 800;
+        color: var(--c-accent);
+        line-height: 1;
+        letter-spacing: -0.02em;
+      }
+      .result-progress__value span {
+        font-size: 16px;
+        margin-left: 2px;
+      }
+      .result-progress__label {
+        font-size: 11px;
+        color: var(--c-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        margin-top: 4px;
+      }
+      .result-meta {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+        background: var(--c-surface-alt);
+        border: 1px solid var(--c-border);
+        border-radius: var(--radius-md);
+        padding: 16px;
+      }
+      .result-meta__item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .result-meta__item [nz-icon] {
+        font-size: 18px;
+        color: var(--c-accent);
+        flex-shrink: 0;
+      }
+      .result-meta__label {
+        font-size: 11px;
+        color: var(--c-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+      }
+      .result-meta__value {
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--c-ink);
+        margin-top: 2px;
+      }
+      @media (max-width: 600px) {
+        .result-meta {
+          grid-template-columns: 1fr;
+        }
+        .result-head {
+          flex-direction: column;
+        }
+        .result-progress {
+          text-align: left;
+        }
+      }
     `,
   ],
 })
@@ -86,6 +195,13 @@ export class PublicConsultComponent implements OnInit {
   result?: PublicActivityView;
   error?: string;
   stages: ReurbStage[] = [];
+
+  get progressPercent(): number {
+    if (!this.result || !this.stages.length) return 0;
+    // Considera etapas concluídas (anteriores à atual) como progresso
+    const completed = Math.max(0, this.result.stage.order - 1);
+    return Math.round((completed / this.stages.length) * 100);
+  }
 
   constructor(
     private fb: FormBuilder,

@@ -502,13 +502,19 @@ textarea.ant-input {
 .ant-steps-item-process .ant-steps-item-icon {
   background: var(--c-accent);
   border-color: var(--c-accent);
+  box-shadow: 0 0 0 4px rgba(198, 242, 74, 0.18);
   > .ant-steps-icon {
     color: var(--c-accent-ink);
+    font-weight: 700;
   }
 }
 .ant-steps-item-process .ant-steps-item-title {
   color: var(--c-ink) !important;
   font-weight: 700;
+}
+.ant-steps-item-process .ant-steps-item-description {
+  color: var(--c-accent) !important;
+  font-weight: 600;
 }
 .ant-steps-item-finish .ant-steps-item-icon {
   border-color: var(--c-accent);
@@ -1220,13 +1226,47 @@ h4 {
   }
 }
 
-// Link de protocolo
+// Link de protocolo + botão copiar
+.protocol-cell {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
 .protocol-link {
   text-decoration: none;
   &:hover code {
     background: var(--c-accent);
     color: var(--c-accent-ink);
   }
+}
+.protocol-copy {
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--c-muted);
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  transition: all 120ms ease;
+  opacity: 0.5;
+
+  [nz-icon] {
+    font-size: 12px;
+  }
+
+  &:hover {
+    background: var(--c-surface-hover);
+    border-color: var(--c-border-strong);
+    color: var(--c-accent);
+    opacity: 1;
+  }
+}
+tr:hover .protocol-copy {
+  opacity: 0.85;
 }
 
 // Status badge (no prazo / vencendo / em atraso)

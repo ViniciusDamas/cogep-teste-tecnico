@@ -30,6 +30,7 @@ import {
   InfoCircleOutline,
   MoreOutline,
   DownOutline,
+  CopyOutline,
 } from '@ant-design/icons-angular/icons';
 
 import { AppComponent } from './app.component';
@@ -62,6 +63,7 @@ const ICONS = [
   InfoCircleOutline,
   MoreOutline,
   DownOutline,
+  CopyOutline,
 ];
 
 registerLocaleData(ptBr);

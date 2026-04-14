@@ -105,14 +105,27 @@ interface StatusInfo {
         <tbody>
           <tr *ngFor="let a of table.data">
             <td>
-              <a
-                class="protocol-link"
-                [href]="'/consulta/' + a.protocol"
-                target="_blank"
-                rel="noopener"
-              >
-                <code>{{ a.protocol }}</code>
-              </a>
+              <div class="protocol-cell">
+                <a
+                  class="protocol-link"
+                  [href]="'/consulta/' + a.protocol"
+                  target="_blank"
+                  rel="noopener"
+                  [title]="'Abrir consulta pública: ' + a.protocol"
+                >
+                  <code>{{ a.protocol }}</code>
+                </a>
+                <button
+                  class="protocol-copy"
+                  type="button"
+                  (click)="copyProtocol(a.protocol)"
+                  nz-tooltip
+                  nzTooltipTitle="Copiar protocolo"
+                  aria-label="Copiar protocolo"
+                >
+                  <span nz-icon nzType="copy"></span>
+                </button>
+              </div>
             </td>
             <td>{{ a.name }}</td>
             <td>
@@ -303,6 +316,17 @@ export class ActivityListComponent implements OnInit {
   }
 
   initialsFor = initialsFor;
+
+  copyProtocol(protocol: string): void {
+    if (!navigator.clipboard) {
+      this.msg.warning('Clipboard indisponível neste navegador');
+      return;
+    }
+    navigator.clipboard
+      .writeText(protocol)
+      .then(() => this.msg.success(`${protocol} copiado`))
+      .catch(() => this.msg.error('Falha ao copiar'));
+  }
 
   statusFor(a: Activity): StatusInfo {
     const today = new Date();
