@@ -8,6 +8,34 @@ Aplicação web de cadastro de **pessoas** e **atividades** com autenticação J
 
 ---
 
+## Demonstração visual
+
+### Telas principais
+
+| Dashboard | Kanban REURB |
+|---|---|
+| ![Dashboard](docs/screenshots/01-dashboard.png) | ![Kanban](docs/screenshots/02-kanban.png) |
+
+| Lista de Pessoas + mini mapa | Consulta pública por protocolo |
+|---|---|
+| ![Pessoas](docs/screenshots/03-pessoas.png) | ![Consulta pública](docs/screenshots/04-consulta-publica.png) |
+
+### Interações em movimento
+
+**Kanban — drag-and-drop entre etapas REURB com auto-scroll**
+
+![Kanban drag-and-drop](docs/screenshots/05-kanban-dragdrop.gif)
+
+**Mapa — clique no nome da pessoa anima zoom até o pin**
+
+![Fly-to no mapa](docs/screenshots/06-flyto-mapa.gif)
+
+**Notificação WhatsApp ao mover card no Kanban (Twilio)**
+
+![Notificação WhatsApp](docs/screenshots/07-whatsapp-notificacao.gif)
+
+---
+
 ## Stack
 
 - **Backend**: Node.js 20 + Express + TypeScript + Sequelize + PostgreSQL 16 + JWT + Zod + axios
