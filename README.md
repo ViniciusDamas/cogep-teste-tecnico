@@ -56,19 +56,17 @@ Aplicação web de cadastro de **pessoas** e **atividades** com autenticação J
 docker compose up --build
 ```
 
-Sobe Postgres + backend (porta 3000) + frontend (porta 4200) + seed automático das 10 etapas REURB.
+Sobe Postgres + backend (porta 3000) + frontend (porta 4200) + seed automático das 11 etapas REURB.
 
-**Notificações WhatsApp reais** (Twilio Sandbox) — crie um `.env` na raiz:
+**Notificações WhatsApp reais** (Twilio Sandbox) — copie o template da raiz e preencha:
 
 ```bash
-NOTIFICATIONS_ENABLED=true
-TWILIO_ACCOUNT_SID=ACxxxxxxxxxxxxxxxx
-TWILIO_AUTH_TOKEN=xxxxxxxxxxxxxxxxxxxxxxxx
-TWILIO_WHATSAPP_FROM=whatsapp:+14155238886
-PUBLIC_APP_URL=http://localhost:4200
+cp .env.example .env
+# edite .env preenchendo TWILIO_ACCOUNT_SID e TWILIO_AUTH_TOKEN
+docker compose up -d backend   # reinicia para ler as novas envs
 ```
 
-Sem config → `MockProvider` loga a mensagem no stdout (ideal para dev/CI).
+Sem essas credenciais, o backend usa `MockProvider` (loga a mensagem no stdout) — ideal para dev/CI e 100% funcional para avaliação do fluxo de Kanban.
 
 ### Opção B — Local
 
@@ -79,7 +77,7 @@ Requisitos: Node 20+, PostgreSQL 16, npm.
 cd backend
 cp .env.example .env
 npm install
-npm run seed           # popula reurb_stages com as 10 etapas da Lei 13.465/2017
+npm run seed           # popula reurb_stages com as 11 sub-etapas (Art. 28, Lei 13.465/2017)
 npm run dev
 
 # Frontend (em outro terminal)
@@ -163,7 +161,7 @@ backend/src/
 ├── routes/         # Express (públicas + autenticadas separadas)
 ├── middlewares/    # auth JWT, error handler
 ├── utils/          # jwt, errors, protocol, text normalization
-└── seeds/          # reurb-stages (10 etapas da Lei 13.465/2017)
+└── seeds/          # reurb-stages (11 sub-etapas alinhadas ao Art. 28)
 ```
 
 Dependência sempre flui para o domínio: `controllers → services → models`.
@@ -315,8 +313,8 @@ cogep-teste-tecnico/
 ├── docker-compose.yml
 ├── .github/workflows/ci.yml
 ├── .husky/                     # pre-commit + pre-push
-├── .env.example → backend/.env.example
-├── CONTEXTO_E_ESTRATEGIA.md    # briefing interno (pesquisa + decisões)
+├── .env.example                # vars consumidas pelo docker-compose (Twilio)
+├── PESQUISA_DE_DOMINIO.md      # contexto REURB + decisões técnicas
 └── README.md
 ```
 
@@ -343,7 +341,7 @@ CI roda os dois em cada push/PR.
 | POST   | `/api/auth/register`                    | não  | Cria usuário                             |
 | POST   | `/api/auth/login`                       | não  | Emite JWT                                |
 | GET    | `/api/auth/me`                          | sim  | Dados do usuário logado                  |
-| GET    | `/api/stages`                           | não  | Lista as 10 etapas REURB                 |
+| GET    | `/api/stages`                           | não  | Lista as 11 sub-etapas REURB             |
 | GET    | `/api/persons`                          | sim  | Lista pessoas                            |
 | POST   | `/api/persons`                          | sim  | Cria pessoa (geocoding automático)       |
 | PUT    | `/api/persons/:id`                      | sim  | Atualiza pessoa                          |
