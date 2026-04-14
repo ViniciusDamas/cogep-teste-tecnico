@@ -1,0 +1,54 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: cogep-postgres
+    environment:
+      POSTGRES_USER: cogep
+      POSTGRES_PASSWORD: cogep
+      POSTGRES_DB: cogep
+    ports:
+      - "5432:5432"
+    volumes:
+      - cogep-pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U cogep"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build: ./backend
+    container_name: cogep-backend
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: cogep
+      DB_PASSWORD: cogep
+      DB_NAME: cogep
+      JWT_SECRET: change-me-in-production
+      JWT_EXPIRES_IN: 1d
+      NOTIFICATIONS_ENABLED: ${NOTIFICATIONS_ENABLED:-false}
+      TWILIO_ACCOUNT_SID: ${TWILIO_ACCOUNT_SID:-}
+      TWILIO_AUTH_TOKEN: ${TWILIO_AUTH_TOKEN:-}
+      TWILIO_WHATSAPP_FROM: ${TWILIO_WHATSAPP_FROM:-whatsapp:+14155238886}
+      PUBLIC_APP_URL: ${PUBLIC_APP_URL:-http://localhost:4200}
+    ports:
+      - "3000:3000"
+
+  frontend:
+    build: ./frontend
+    container_name: cogep-frontend
+    depends_on:
+      - backend
+    ports:
+      - "4200:80"
+
+volumes:
+  cogep-pgdata:

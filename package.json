@@ -1,0 +1,27 @@
+{
+  "name": "cogep-workspace",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Workspace raiz — scripts de conveniência e Husky",
+  "scripts": {
+    "prepare": "husky install",
+    "lint": "npm --prefix backend run lint && npm --prefix frontend run lint",
+    "test": "npm --prefix backend test && npm --prefix frontend test -- --watch=false --browsers=ChromeHeadlessCI",
+    "install:all": "npm install && npm --prefix backend install && npm --prefix frontend install"
+  },
+  "devDependencies": {
+    "eslint": "^8.57.1",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.7",
+    "prettier": "^3.8.2"
+  },
+  "lint-staged": {
+    "backend/src/**/*.ts": [
+      "prettier --write",
+      "eslint --fix"
+    ],
+    "frontend/src/**/*.{ts,html,scss}": [
+      "prettier --write"
+    ]
+  }
+}
