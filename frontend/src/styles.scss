@@ -1,0 +1,1555 @@
+// ============================================
+// Design tokens — tema dark refinado
+// Inspirado em cogep.com.br — assets e marca visual próprios
+// ============================================
+:root {
+  // Superfícies: preto "soft" (não #000) para leitura confortável
+  --c-bg: #101114;
+  --c-surface: #1a1b20;
+  --c-surface-alt: #22242b;
+  --c-surface-hover: #2a2c34;
+
+  // Tipografia
+  --c-ink: #e9eaee; // texto principal (não branco puro)
+  --c-ink-soft: #b4b7c1; // texto secundário
+  --c-muted: #7a7e8a; // labels/placeholders
+  --c-border: #2c2e37;
+  --c-border-strong: #3a3d48;
+
+  // Brand
+  --c-accent: #c6f24a; // verde neon "COGEP"
+  --c-accent-dim: rgba(198, 242, 74, 0.18);
+  --c-accent-ink: #0a0a0a;
+  --c-accent-dark: #a8d82c;
+  --c-warn: #ff6d2e; // laranja do site
+  --c-danger: #ff5470;
+
+  // Elevação
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.25);
+  --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.28);
+  --shadow-md: 0 12px 32px rgba(0, 0, 0, 0.36);
+
+  --font-sans: 'Manrope', 'Helvetica Neue', Arial, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  // Escala base — tudo um pouco maior que o default do Ant
+  font-size: 15px;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  font-family: var(--font-sans);
+  color: var(--c-ink);
+  background: var(--c-bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background: var(--c-accent);
+  color: var(--c-accent-ink);
+}
+
+code,
+pre {
+  font-family: var(--font-mono);
+}
+
+code {
+  color: var(--c-accent);
+  background: var(--c-accent-dim);
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-size: 0.85em;
+}
+
+a {
+  color: var(--c-accent);
+  &:hover {
+    color: var(--c-accent-dark);
+  }
+}
+
+// ============================================
+// NgZorro overrides — dark theme cobertura
+// ============================================
+.ant-layout,
+.ant-layout-header,
+.ant-layout-content,
+.ant-layout-footer {
+  background: var(--c-bg);
+  color: var(--c-ink);
+}
+
+.ant-layout-header {
+  padding: 0;
+  height: auto;
+  line-height: 1;
+}
+
+// Cards
+.ant-card {
+  background: var(--c-surface);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--c-border);
+  box-shadow: var(--shadow-xs);
+  color: var(--c-ink);
+}
+.ant-card-head {
+  border-bottom-color: var(--c-border);
+  color: var(--c-ink);
+  padding: 18px 24px;
+  min-height: 56px;
+}
+.ant-card-head-title {
+  font-weight: 700;
+  font-size: 17px;
+  letter-spacing: -0.01em;
+  color: var(--c-ink);
+}
+.ant-card-extra {
+  color: var(--c-muted);
+}
+.ant-card-body {
+  padding: 24px;
+  color: var(--c-ink);
+}
+
+// Botões
+.ant-btn {
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  height: 36px;
+  padding: 0 16px;
+  transition: all 160ms ease;
+}
+.ant-btn-sm {
+  height: 30px;
+  padding: 0 12px;
+  font-size: 13px;
+}
+.ant-btn,
+.ant-btn-default {
+  background: var(--c-surface-alt) !important;
+  border-color: var(--c-border-strong) !important;
+  color: var(--c-ink) !important;
+
+  &:hover,
+  &:focus {
+    background: var(--c-surface-hover) !important;
+    border-color: var(--c-accent) !important;
+    color: var(--c-ink) !important;
+  }
+}
+
+.ant-btn-primary {
+  background: var(--c-ink) !important;
+  border-color: var(--c-ink) !important;
+  color: var(--c-bg) !important;
+
+  &:hover,
+  &:focus {
+    background: #ffffff !important;
+    border-color: #ffffff !important;
+    color: var(--c-bg) !important;
+  }
+}
+
+.ant-btn-primary.is-accent,
+.btn-accent {
+  background: var(--c-accent) !important;
+  border-color: var(--c-accent) !important;
+  color: var(--c-accent-ink) !important;
+
+  &:hover,
+  &:focus {
+    background: var(--c-accent-dark) !important;
+    border-color: var(--c-accent-dark) !important;
+  }
+}
+
+.ant-btn-dangerous {
+  background: transparent;
+  border-color: var(--c-danger);
+  color: var(--c-danger);
+
+  &:hover {
+    background: rgba(255, 84, 112, 0.1) !important;
+    color: var(--c-danger) !important;
+    border-color: var(--c-danger) !important;
+  }
+}
+
+// Inputs
+.ant-input,
+.ant-input-affix-wrapper,
+.ant-input-number,
+.ant-select-selector,
+.ant-picker {
+  background: var(--c-surface-alt) !important;
+  border-color: var(--c-border-strong) !important;
+  color: var(--c-ink) !important;
+  border-radius: var(--radius-sm) !important;
+  height: 40px;
+}
+
+// Input com affix (prefix/suffix icon) precisa de alinhamento explícito
+.ant-input-affix-wrapper {
+  display: inline-flex !important;
+  align-items: center;
+  padding: 0 12px !important;
+
+  > .ant-input {
+    height: auto !important;
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    line-height: 38px;
+  }
+
+  .ant-input-prefix {
+    margin-right: 10px;
+    color: var(--c-muted);
+    display: inline-flex;
+    align-items: center;
+  }
+  .ant-input-suffix {
+    margin-left: 10px;
+    color: var(--c-muted);
+  }
+}
+
+// Date picker + select: ícone/caret em dark
+.ant-picker-suffix,
+.ant-picker-clear,
+.ant-select-arrow,
+.ant-select-clear {
+  color: var(--c-muted) !important;
+}
+.ant-picker-clear,
+.ant-select-clear {
+  background: var(--c-surface-alt) !important;
+}
+.ant-picker-separator {
+  color: var(--c-muted) !important;
+}
+
+// Calendário do date picker — dark mode completo
+.ant-picker-panel-container,
+.ant-picker-panel {
+  background: var(--c-surface) !important;
+  border-color: var(--c-border-strong) !important;
+}
+.ant-picker-header {
+  color: var(--c-ink) !important;
+  border-bottom-color: var(--c-border) !important;
+
+  button {
+    color: var(--c-ink-soft) !important;
+    &:hover {
+      color: var(--c-accent) !important;
+    }
+  }
+}
+.ant-picker-content th {
+  color: var(--c-muted) !important;
+}
+.ant-picker-cell {
+  color: var(--c-muted) !important;
+
+  &.ant-picker-cell-in-view {
+    color: var(--c-ink) !important;
+  }
+
+  .ant-picker-cell-inner {
+    color: inherit !important;
+    &:hover {
+      background: var(--c-surface-hover) !important;
+    }
+  }
+
+  &.ant-picker-cell-today .ant-picker-cell-inner::before {
+    border-color: var(--c-accent) !important;
+  }
+
+  &.ant-picker-cell-selected .ant-picker-cell-inner {
+    background: var(--c-accent) !important;
+    color: var(--c-accent-ink) !important;
+    font-weight: 700;
+  }
+}
+.ant-picker-footer {
+  border-top-color: var(--c-border) !important;
+  background: var(--c-surface) !important;
+
+  .ant-picker-today-btn {
+    color: var(--c-accent) !important;
+    &:hover {
+      color: var(--c-accent-dark) !important;
+    }
+  }
+}
+
+// Select sempre ocupando 100% da coluna (evita card/row redimensionar com opção longa)
+nz-select,
+.ant-select {
+  width: 100% !important;
+}
+.ant-select-selection-item {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// Dropdown do select: largura mínima pra caber labels longos (ex: etapas REURB)
+.ant-select-item-option-content {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ant-select-dropdown {
+  min-width: 340px !important;
+}
+.ant-input,
+.ant-select-selection-item,
+.ant-picker-input > input {
+  color: var(--c-ink) !important;
+}
+.ant-input::placeholder,
+.ant-picker-input > input::placeholder {
+  color: var(--c-muted) !important;
+}
+.ant-input:hover,
+.ant-picker:hover,
+.ant-select:not(.ant-select-disabled):hover .ant-select-selector {
+  border-color: var(--c-accent) !important;
+}
+.ant-input:focus,
+.ant-picker-focused,
+.ant-select-focused .ant-select-selector {
+  border-color: var(--c-accent) !important;
+  box-shadow: 0 0 0 3px var(--c-accent-dim) !important;
+}
+textarea.ant-input {
+  min-height: 80px;
+}
+
+// Select dropdown + pickers
+.ant-select-dropdown,
+.ant-picker-dropdown .ant-picker-panel-container {
+  background: var(--c-surface) !important;
+  border: 1px solid var(--c-border-strong) !important;
+}
+.ant-select-item {
+  color: var(--c-ink) !important;
+}
+.ant-select-item-option-active:not(.ant-select-item-option-disabled) {
+  background: var(--c-surface-hover) !important;
+}
+.ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
+  background: var(--c-accent-dim) !important;
+  color: var(--c-accent) !important;
+  font-weight: 600;
+}
+
+// Form
+.ant-form-item-label > label {
+  color: var(--c-ink-soft) !important;
+  font-weight: 500;
+  font-size: 13px;
+}
+
+// Tags
+.ant-tag {
+  border-radius: 4px;
+  font-weight: 600;
+  padding: 2px 10px;
+  font-size: 12px;
+  background: var(--c-surface-alt);
+  border-color: var(--c-border-strong);
+  color: var(--c-ink-soft);
+}
+.ant-tag-blue {
+  color: var(--c-accent-ink) !important;
+  background: var(--c-accent) !important;
+  border-color: var(--c-accent) !important;
+}
+.ant-tag-green {
+  color: var(--c-accent-ink) !important;
+  background: var(--c-accent) !important;
+  border-color: var(--c-accent) !important;
+}
+.ant-tag-red {
+  color: #fff !important;
+  background: var(--c-danger) !important;
+  border-color: var(--c-danger) !important;
+}
+
+// Menu horizontal (header)
+.ant-menu-horizontal {
+  border-bottom: 0 !important;
+  background: transparent !important;
+  color: var(--c-ink);
+  line-height: 50px;
+}
+.ant-menu-horizontal > .ant-menu-item {
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--c-ink-soft) !important;
+  padding: 0 14px;
+  border-bottom: 0 !important;
+  top: 0;
+  position: relative;
+
+  &:hover {
+    color: var(--c-ink) !important;
+  }
+}
+// Remove o after default do Ant (linha azul/full-width) e desenha um próprio curto
+.ant-menu-horizontal > .ant-menu-item::after,
+.ant-menu-horizontal > .ant-menu-submenu::after {
+  display: none !important;
+}
+.ant-menu-horizontal > .ant-menu-item-selected,
+.ant-menu-horizontal > .ant-menu-item-active {
+  color: var(--c-accent) !important;
+  background: transparent !important;
+}
+.ant-menu-horizontal > .ant-menu-item-selected::before {
+  content: '';
+  position: absolute;
+  bottom: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 24px;
+  height: 3px;
+  background: var(--c-accent);
+  border-radius: 2px;
+}
+
+// Tabelas
+.ant-table {
+  background: transparent;
+  color: var(--c-ink);
+}
+.ant-table-thead > tr > th {
+  background: var(--c-surface-alt) !important;
+  color: var(--c-ink-soft) !important;
+  font-weight: 600;
+  font-size: 13px;
+  border-bottom-color: var(--c-border) !important;
+}
+.ant-table-tbody > tr > td {
+  border-bottom-color: var(--c-border) !important;
+  color: var(--c-ink);
+}
+.ant-table-tbody > tr:hover > td,
+.ant-table-tbody > tr.ant-table-row-hover > td {
+  background: var(--c-surface-hover) !important;
+}
+.ant-pagination {
+  color: var(--c-ink-soft);
+}
+.ant-pagination-item {
+  background: var(--c-surface-alt) !important;
+  border-color: var(--c-border-strong) !important;
+  border-radius: 6px !important;
+  a {
+    color: var(--c-ink-soft) !important;
+  }
+  &:hover {
+    border-color: var(--c-accent) !important;
+    a {
+      color: var(--c-accent) !important;
+    }
+  }
+}
+.ant-pagination-item-active {
+  background: var(--c-accent-dim) !important;
+  border-color: var(--c-accent) !important;
+  a {
+    color: var(--c-accent) !important;
+    font-weight: 700;
+  }
+}
+.ant-pagination-prev,
+.ant-pagination-next {
+  .ant-pagination-item-link {
+    background: var(--c-surface-alt) !important;
+    border-color: var(--c-border-strong) !important;
+    color: var(--c-ink-soft) !important;
+  }
+}
+
+// Steps
+.ant-steps-item-wait .ant-steps-item-icon {
+  background: var(--c-surface-alt);
+  border-color: var(--c-border-strong);
+  > .ant-steps-icon {
+    color: var(--c-muted);
+  }
+}
+.ant-steps-item-wait .ant-steps-item-title,
+.ant-steps-item-wait .ant-steps-item-description {
+  color: var(--c-muted) !important;
+}
+.ant-steps-item-process .ant-steps-item-icon {
+  background: var(--c-accent);
+  border-color: var(--c-accent);
+  > .ant-steps-icon {
+    color: var(--c-accent-ink);
+  }
+}
+.ant-steps-item-process .ant-steps-item-title {
+  color: var(--c-ink) !important;
+  font-weight: 700;
+}
+.ant-steps-item-finish .ant-steps-item-icon {
+  border-color: var(--c-accent);
+  background: transparent;
+  > .ant-steps-icon {
+    color: var(--c-accent);
+  }
+}
+.ant-steps-item-finish .ant-steps-item-title,
+.ant-steps-item-finish .ant-steps-item-description {
+  color: var(--c-ink-soft) !important;
+}
+
+// Drawer
+.ant-drawer-content {
+  background: var(--c-surface) !important;
+}
+.ant-drawer-header {
+  background: var(--c-surface) !important;
+  border-bottom-color: var(--c-border) !important;
+}
+.ant-drawer-title,
+.ant-drawer-close {
+  color: var(--c-ink) !important;
+}
+.ant-drawer-body {
+  color: var(--c-ink);
+}
+
+// Timeline
+.ant-timeline-item-tail {
+  border-left-color: var(--c-border-strong) !important;
+}
+.ant-timeline-item-head {
+  background: var(--c-surface) !important;
+}
+.ant-timeline-item-content {
+  color: var(--c-ink-soft);
+}
+
+// Statistic (dashboard)
+.ant-statistic-title {
+  color: var(--c-ink-soft) !important;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 4px !important;
+}
+.ant-statistic-content {
+  color: var(--c-ink) !important;
+  font-size: 32px !important;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  font-family: var(--font-sans);
+}
+
+// Divider
+.ant-divider {
+  border-top-color: var(--c-border) !important;
+  color: var(--c-ink-soft) !important;
+  &.ant-divider-with-text::before,
+  &.ant-divider-with-text::after {
+    border-top-color: var(--c-border) !important;
+  }
+  .ant-divider-inner-text {
+    color: var(--c-ink-soft) !important;
+    font-weight: 600;
+  }
+}
+
+// Extra/help text embaixo dos inputs (nz-form-control [nzExtra])
+.ant-form-item-extra {
+  color: var(--c-muted) !important;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+// Divider customizado pra seções dentro de form (alternativa ao nz-divider)
+.form-section-divider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 8px 0 20px;
+  padding-top: 20px;
+  border-top: 1px solid var(--c-border);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--c-ink);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+
+  [nz-icon] {
+    color: var(--c-accent);
+    font-size: 16px;
+  }
+
+  &__hint {
+    margin-left: auto;
+    color: var(--c-muted);
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: none;
+    letter-spacing: 0;
+  }
+}
+
+// Ações de formulário (footer sticky opcional)
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: 1px solid var(--c-border);
+}
+
+// Wrapper de formulários: limita largura para conforto de leitura
+.form-wrapper {
+  max-width: 920px;
+  margin: 0 auto;
+}
+
+// Empty
+.ant-empty-description {
+  color: var(--c-muted);
+}
+
+// Message
+.ant-message-notice-content {
+  background: var(--c-surface) !important;
+  color: var(--c-ink) !important;
+  border: 1px solid var(--c-border-strong);
+  border-radius: var(--radius-sm);
+}
+
+// Popconfirm
+.ant-popover-inner {
+  background: var(--c-surface) !important;
+  border: 1px solid var(--c-border-strong);
+}
+.ant-popover-inner-content,
+.ant-popover-message-title {
+  color: var(--c-ink) !important;
+}
+.ant-popover-arrow-content {
+  background: var(--c-surface) !important;
+}
+
+// Dropdown menu (usuário, etc)
+.ant-dropdown-menu {
+  background: var(--c-surface) !important;
+  border: 1px solid var(--c-border-strong) !important;
+  border-radius: var(--radius-md) !important;
+  box-shadow: var(--shadow-md) !important;
+  padding: 6px !important;
+  min-width: 220px;
+}
+.ant-dropdown-menu-item {
+  color: var(--c-ink) !important;
+  padding: 8px 12px !important;
+  border-radius: var(--radius-sm) !important;
+
+  [nz-icon] {
+    margin-right: 8px;
+    color: var(--c-muted);
+  }
+
+  &:hover:not(.ant-dropdown-menu-item-disabled) {
+    background: var(--c-surface-hover) !important;
+    color: var(--c-accent) !important;
+    [nz-icon] {
+      color: var(--c-accent) !important;
+    }
+  }
+}
+.ant-dropdown-menu-item-divider {
+  background: var(--c-border) !important;
+  margin: 4px 0 !important;
+}
+
+.user-menu__header {
+  cursor: default !important;
+  opacity: 1 !important;
+  padding: 10px 12px !important;
+
+  &:hover {
+    background: transparent !important;
+    color: var(--c-ink) !important;
+  }
+}
+.user-menu__name {
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--c-ink) !important;
+}
+.user-menu__email {
+  font-size: 11px;
+  color: var(--c-muted) !important;
+  margin-top: 2px;
+}
+
+// Spin
+.ant-spin-dot-item {
+  background-color: var(--c-accent);
+}
+
+// ============================================
+// App layout
+// ============================================
+.page-container {
+  padding: 32px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+.page-container--fluid {
+  max-width: none;
+  padding: 20px 28px 28px;
+}
+
+// ============================================
+// Kanban
+// ============================================
+.kanban-shell {
+  // Quebra o max-width do page-container ocupando a viewport inteira
+  width: 100vw;
+  position: relative;
+  margin-left: calc(-1 * ((100vw - 100%) / 2));
+  padding: 0 28px 28px;
+}
+
+.kanban-shell__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 4px 16px;
+  gap: 16px;
+}
+.kanban-shell__title {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.015em;
+  margin: 0;
+}
+.kanban-shell__subtitle {
+  color: var(--c-muted);
+  font-size: 13px;
+  margin-top: 2px;
+}
+
+.kanban-board {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  padding-bottom: 20px;
+  // IMPORTANTE: não usar scroll-behavior smooth aqui — o auto-scroll
+  // programático no drag fica artificialmente lento.
+
+  // Scrollbar mais elegante
+  &::-webkit-scrollbar {
+    height: 10px;
+  }
+  &::-webkit-scrollbar-track {
+    background: var(--c-surface);
+    border-radius: 10px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: var(--c-border-strong);
+    border-radius: 10px;
+    &:hover {
+      background: var(--c-accent-dark);
+    }
+  }
+}
+
+.kanban-column {
+  flex: 0 0 300px;
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius-md);
+  padding: 14px;
+  min-height: 360px;
+  display: flex;
+  flex-direction: column;
+}
+
+.kanban-column__empty {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 12px;
+  color: var(--c-muted);
+  font-size: 12px;
+  text-align: center;
+  border: 2px dashed var(--c-border);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.01);
+}
+
+.kanban-column__header {
+  font-weight: 700;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--c-ink-soft);
+  margin-bottom: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+
+  &::before {
+    content: '';
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--c-accent);
+    margin-right: 6px;
+    flex-shrink: 0;
+  }
+
+  > span:first-of-type {
+    flex-grow: 1;
+    line-height: 1.35;
+  }
+}
+
+.kanban-card {
+  background: var(--c-surface-alt);
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  margin-bottom: 10px;
+  cursor: grab;
+  box-shadow: var(--shadow-xs);
+  transition: all 150ms ease;
+  position: relative;
+
+  strong {
+    display: block;
+    font-size: 14px;
+    color: var(--c-ink);
+    margin-bottom: 6px;
+    letter-spacing: -0.005em;
+    padding-right: 26px;
+  }
+
+  &__menu {
+    position: absolute !important;
+    top: 6px;
+    right: 6px;
+    width: 28px !important;
+    height: 28px !important;
+    padding: 0 !important;
+    border-radius: 6px !important;
+    background: var(--c-surface) !important;
+    border: 1px solid var(--c-border-strong) !important;
+    color: var(--c-ink) !important;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    transition:
+      background 120ms ease,
+      color 120ms ease;
+    z-index: 2;
+  }
+}
+.kanban-card__menu:hover {
+  background: var(--c-accent) !important;
+  color: var(--c-accent-ink) !important;
+  border-color: var(--c-accent) !important;
+}
+.kanban-card:hover {
+  border-color: var(--c-accent);
+  background: var(--c-surface-hover);
+  box-shadow: var(--shadow-sm);
+  transform: translateY(-2px);
+}
+.kanban-card:active {
+  cursor: grabbing;
+}
+
+.cdk-drag-placeholder {
+  opacity: 0.4;
+  background: var(--c-accent-dim);
+  border: 2px dashed var(--c-accent);
+  border-radius: var(--radius-sm);
+  margin-bottom: 10px;
+  min-height: 80px;
+}
+.cdk-drag-preview {
+  box-shadow: var(--shadow-md);
+  border-radius: var(--radius-sm);
+  background: var(--c-surface-hover);
+  border: 1px solid var(--c-accent);
+}
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+// ============================================
+// Map
+// ============================================
+.map-container {
+  height: 70vh;
+  width: 100%;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--c-border);
+}
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
+  background: var(--c-surface) !important;
+  color: var(--c-ink) !important;
+}
+
+// Mapa em tela cheia — escapa do max-width do page-container
+.map-shell {
+  width: 100vw;
+  position: relative;
+  margin-left: calc(-1 * ((100vw - 100%) / 2));
+  padding: 0 28px 24px;
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 120px);
+}
+.map-shell__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 4px 4px 16px;
+  flex-shrink: 0;
+}
+.map-shell__title {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.015em;
+  margin: 0;
+  color: var(--c-ink);
+}
+.map-shell__subtitle {
+  font-size: 13px;
+  color: var(--c-muted);
+  margin-top: 4px;
+}
+.map-shell__canvas {
+  flex: 1;
+  min-height: 0;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--c-border);
+  background: var(--c-surface-alt);
+}
+
+// ============================================
+// Marca visual: chip tipográfico
+// ============================================
+.brand-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 800;
+  font-size: 17px;
+  letter-spacing: -0.015em;
+  color: var(--c-ink);
+  text-decoration: none;
+
+  &:hover {
+    color: var(--c-ink);
+  }
+}
+.brand-chip__mark {
+  width: 30px;
+  height: 30px;
+  border-radius: 7px;
+  background: var(--c-accent);
+  display: inline-grid;
+  place-items: center;
+  font-weight: 800;
+  color: var(--c-accent-ink);
+  font-size: 15px;
+  flex-shrink: 0;
+}
+.brand-chip__suffix {
+  color: var(--c-muted);
+  font-weight: 500;
+  font-size: 13px;
+  letter-spacing: 0.02em;
+}
+
+// ============================================
+// Auth / public layouts
+// ============================================
+.auth-shell,
+.public-shell {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 85% 15%, rgba(198, 242, 74, 0.12), transparent 45%),
+    radial-gradient(circle at 15% 85%, rgba(255, 109, 46, 0.08), transparent 50%), var(--c-bg);
+  display: flex;
+  flex-direction: column;
+}
+
+.auth-card {
+  background: var(--c-surface);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--c-border);
+  box-shadow: var(--shadow-md);
+  padding: 40px 36px;
+  width: 100%;
+  max-width: 440px;
+}
+.auth-card__eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--c-accent);
+  font-weight: 700;
+}
+.auth-card__title {
+  font-size: 30px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 6px 0 28px;
+  color: var(--c-ink);
+}
+
+// ============================================
+// Headings / utilitários
+// ============================================
+.section-heading {
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 0;
+  color: var(--c-ink);
+}
+.section-subheading {
+  color: var(--c-muted);
+  font-size: 13px;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  color: var(--c-ink);
+  letter-spacing: -0.015em;
+}
+
+.text-muted {
+  color: var(--c-muted) !important;
+}
+
+// Bootstrap overrides
+.mb-0 {
+  margin-bottom: 0 !important;
+}
+.mb-1 {
+  margin-bottom: 6px !important;
+}
+.mb-2 {
+  margin-bottom: 12px !important;
+}
+.mb-3 {
+  margin-bottom: 20px !important;
+}
+.mt-3 {
+  margin-top: 20px !important;
+}
+.w-100 {
+  width: 100%;
+}
+.d-flex {
+  display: flex;
+}
+.gap-2 {
+  gap: 12px;
+}
+.align-items-center {
+  align-items: center;
+}
+.justify-content-between {
+  justify-content: space-between;
+}
+.justify-content-center {
+  justify-content: center;
+}
+.flex-grow-1 {
+  flex-grow: 1;
+}
+.min-vh-100 {
+  min-height: 100vh;
+}
+
+// Avatar com iniciais — técnica: line-height igual ao height do container
+.avatar {
+  display: inline-block;
+  width: 34px;
+  height: 34px;
+  line-height: 34px;
+  border-radius: 50%;
+  background: var(--c-accent-dim);
+  color: var(--c-accent);
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0;
+  text-align: center;
+  border: 1px solid rgba(198, 242, 74, 0.22);
+  flex-shrink: 0;
+  padding: 0;
+  box-sizing: border-box;
+  vertical-align: middle;
+
+  &--sm {
+    width: 28px;
+    height: 28px;
+    line-height: 26px;
+    font-size: 11px;
+  }
+}
+.name-with-avatar {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--c-ink);
+}
+.name-with-avatar--clickable {
+  background: transparent;
+  border: 0;
+  padding: 4px 10px 4px 4px;
+  margin: -4px -10px -4px -4px;
+  border-radius: 999px;
+  cursor: pointer;
+  text-align: left;
+  color: var(--c-ink);
+  font-size: inherit;
+  font-family: inherit;
+  transition:
+    background 140ms ease,
+    color 140ms ease;
+
+  &:hover:not(:disabled) {
+    background: var(--c-accent-dim);
+    color: var(--c-accent);
+
+    .name-with-avatar__pin {
+      color: var(--c-accent);
+      opacity: 1;
+    }
+  }
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+  }
+}
+.name-with-avatar__pin {
+  margin-left: auto;
+  font-size: 13px;
+  color: var(--c-muted);
+  opacity: 0.5;
+  transition:
+    opacity 140ms ease,
+    color 140ms ease;
+}
+
+// Section header
+.section-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+
+  &__title {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin: 0;
+    color: var(--c-ink);
+  }
+  &__subtitle {
+    font-size: 13px;
+    color: var(--c-muted);
+    margin-top: 4px;
+  }
+}
+
+// Search input (com ícone)
+.search-input {
+  margin-bottom: 18px;
+}
+
+// Filtros em linha (busca + select)
+.filters-row {
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  gap: 12px;
+  margin-bottom: 18px;
+
+  &__search {
+    width: 100%;
+  }
+  &__select {
+    width: 100%;
+  }
+}
+
+// Link de protocolo
+.protocol-link {
+  text-decoration: none;
+  &:hover code {
+    background: var(--c-accent);
+    color: var(--c-accent-ink);
+  }
+}
+
+// Status badge (no prazo / vencendo / em atraso)
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  background: var(--c-surface-alt);
+  border: 1px solid var(--c-border);
+
+  &__dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  &--ontrack {
+    color: var(--c-accent-dark);
+    background: rgba(168, 216, 44, 0.08);
+    border-color: rgba(168, 216, 44, 0.25);
+    .status-badge__dot {
+      background: var(--c-accent);
+    }
+  }
+  &--duesoon {
+    color: #ffb86b;
+    background: rgba(255, 109, 46, 0.1);
+    border-color: rgba(255, 109, 46, 0.3);
+    .status-badge__dot {
+      background: var(--c-warn);
+    }
+  }
+  &--overdue {
+    color: var(--c-danger);
+    background: rgba(255, 84, 112, 0.1);
+    border-color: rgba(255, 84, 112, 0.3);
+    .status-badge__dot {
+      background: var(--c-danger);
+    }
+  }
+}
+
+// Mini kanban (preview abaixo da tabela de atividades)
+.mini-kanban {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding: 4px 2px 16px;
+
+  &::-webkit-scrollbar {
+    height: 8px;
+  }
+  &::-webkit-scrollbar-track {
+    background: var(--c-surface);
+    border-radius: 8px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: var(--c-border-strong);
+    border-radius: 8px;
+  }
+
+  &__column {
+    flex: 0 0 210px;
+    background: var(--c-surface-alt);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-sm);
+    padding: 10px;
+    min-height: 160px;
+
+    &--empty {
+      opacity: 0.55;
+    }
+  }
+
+  &__column-head {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 10px;
+    font-size: 11px;
+    color: var(--c-ink-soft);
+    font-weight: 600;
+  }
+
+  &__order {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--c-accent-dim);
+    color: var(--c-accent);
+    display: inline-grid;
+    place-items: center;
+    font-size: 10px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  &__name {
+    flex: 1;
+    line-height: 1.25;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  &__count {
+    background: var(--c-surface);
+    border: 1px solid var(--c-border-strong);
+    border-radius: 4px;
+    padding: 1px 7px;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--c-ink);
+    flex-shrink: 0;
+  }
+
+  &__card {
+    background: var(--c-surface);
+    border: 1px solid var(--c-border);
+    border-radius: 6px;
+    padding: 8px 10px;
+    margin-bottom: 6px;
+    cursor: pointer;
+    transition:
+      border-color 120ms ease,
+      transform 120ms ease;
+
+    &:hover {
+      border-color: var(--c-accent);
+      transform: translateY(-1px);
+    }
+  }
+
+  &__card-name {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--c-ink);
+    margin-bottom: 3px;
+    line-height: 1.3;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  &__card-meta {
+    font-size: 10px;
+    color: var(--c-muted);
+  }
+
+  &__more {
+    font-size: 11px;
+    color: var(--c-muted);
+    text-align: center;
+    padding: 4px;
+    margin-top: 2px;
+  }
+
+  &__empty {
+    font-size: 11px;
+    color: var(--c-muted);
+    text-align: center;
+    padding: 20px 8px;
+    font-style: italic;
+  }
+}
+
+// Mini map
+.persons-map-preview {
+  height: 360px;
+  width: 100%;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--c-border);
+  background: var(--c-surface-alt);
+}
+
+// Audit log
+.audit-actor {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--c-ink-soft);
+  margin: 6px 0;
+  padding: 4px 10px;
+  background: var(--c-surface-alt);
+  border-radius: 4px;
+
+  [nz-icon] {
+    font-size: 12px;
+    color: var(--c-accent);
+  }
+}
+
+.ant-timeline-item-content ul {
+  color: var(--c-ink-soft);
+  font-size: 13px;
+  line-height: 1.6;
+
+  strong {
+    color: var(--c-ink);
+  }
+}
+
+// Chart container
+.dashboard-chart {
+  canvas {
+    height: 560px !important;
+    max-height: 640px;
+  }
+
+  &__subtitle {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--c-ink-soft);
+    letter-spacing: 0;
+    margin-top: 6px;
+  }
+
+  .ant-card-body {
+    padding: 28px 32px;
+  }
+  .ant-card-head {
+    padding: 18px 32px;
+  }
+  .ant-card-head-title {
+    white-space: normal;
+  }
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 20px;
+}
+@media (max-width: 900px) {
+  .dashboard-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+// KPI cards — badge à esquerda, stat à direita (Linear/Tailwind style)
+.kpi-card {
+  position: relative;
+  overflow: hidden;
+  transition:
+    border-color 150ms ease,
+    transform 150ms ease;
+
+  .ant-card-body {
+    padding: 22px 24px;
+    display: grid;
+    grid-template-columns: 52px 1fr;
+    grid-template-rows: auto auto;
+    column-gap: 16px;
+    row-gap: 4px;
+    align-items: center;
+  }
+
+  .ant-statistic-title {
+    grid-column: 2;
+    grid-row: 1;
+    margin: 0 0 2px !important;
+    line-height: 1.2;
+  }
+  .ant-statistic-content {
+    grid-column: 2;
+    grid-row: 2;
+    font-size: 30px !important;
+    line-height: 1.1;
+  }
+
+  &__icon {
+    grid-column: 1;
+    grid-row: 1 / 3;
+    width: 52px;
+    height: 52px;
+    display: inline-grid;
+    place-items: center;
+    font-size: 22px;
+    color: var(--c-accent);
+    background: var(--c-accent-dim);
+    border: 1px solid rgba(198, 242, 74, 0.22);
+    border-radius: 12px;
+    transition:
+      transform 200ms ease,
+      background 150ms ease;
+  }
+
+  &:hover {
+    border-color: var(--c-border-strong) !important;
+    transform: translateY(-2px);
+  }
+  &:hover &__icon {
+    transform: scale(1.05);
+  }
+
+  &--alert {
+    border-color: var(--c-danger) !important;
+    background: linear-gradient(135deg, var(--c-surface) 0%, rgba(255, 84, 112, 0.06) 100%);
+  }
+  &--alert .kpi-card__icon {
+    color: var(--c-danger);
+    background: rgba(255, 84, 112, 0.15);
+  }
+
+  // trend inline (pra futuro, sem dados ainda)
+  &__trend {
+    grid-column: 2;
+    grid-row: 3;
+    font-size: 11px;
+    color: var(--c-muted);
+    font-weight: 500;
+    margin-top: 4px;
+  }
+}
